@@ -1,0 +1,140 @@
+const advertisementsData = [
+    {
+        title:'Ad 1',
+        description:'This is the first advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact1@example.com'
+    },
+    {
+        title:'Ad 2',
+        description:'This is the second advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact2@example.com'
+    },
+    {
+        title:'Ad 3',
+        description:'This is the third advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact3@example.com'
+    },
+    {
+        title:'Ad 4',
+        description:'This is the fourth advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact4@example.com'
+    },
+    {
+        title:'Ad 5',
+        description:'This is the fifth advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact5@example.com'
+    },
+    {
+        title:'Ad 6',
+        description:'This is the sixth advertisement.',
+        image: 'https://placehold.co/150X150',
+        contact: 'contact6@example.com'
+    }
+  ];
+
+const renderAdCard = (ad, adContainer) => {
+    // Create card
+    const card = document.createElement("div");
+    card.classList.add("card", "col-md-4", "mb-3");
+
+    // Create image
+    const img = document.createElement("img");
+    img.classList.add("card-img-top");
+    img.src = ad.image;
+    img.alt = "Ad Image";
+
+    // Create card body
+    const body = document.createElement("div");
+    body.classList.add("card-body");
+
+    // Create title
+    const title = document.createElement("h5");
+    title.classList.add("card-title");
+    title.textContent = ad.title;
+
+    // Create description
+    const desc = document.createElement("p");
+    desc.classList.add("card-text");
+    desc.textContent = ad.description;
+
+    // Create contact (Initially hidden)
+    const contact = document.createElement("p");
+    contact.classList.add("card-text");
+    contact.textContent = "Contact: ***";
+
+    // Create checkbox for toggling contact visibility
+    const chkBox = document.createElement("div");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.id = `toggleContact-${ad.title.replace(/\s/g, '')}`; // Unique ID
+
+    // Create a label for the checkbox
+    const label = document.createElement("label");
+    label.htmlFor = checkbox.id;
+    label.textContent = " View Contact";
+
+    // Append checkbox and label
+    chkBox.appendChild(checkbox);
+    chkBox.appendChild(label);
+
+    // Toggle contact visibility on checkbox change
+    checkbox.addEventListener("change", function () {
+        contact.textContent = checkbox.checked ? `Contact: ${ad.contact}` : "Contact: ***";
+    });
+
+    // Append elements to body
+    body.appendChild(title);
+    body.appendChild(desc);
+    body.appendChild(contact);
+    body.appendChild(chkBox);
+
+    // Create card footer
+    const footer = document.createElement("div");
+    footer.classList.add("card-footer", "text-center");
+
+    // Create "Details" button
+    const adBtn = document.createElement("button");
+    adBtn.classList.add("btn", "btn-info");
+    adBtn.textContent = "Details";
+    adBtn.addEventListener("click", function () {
+        alert("Contact details: " + ad.contact);
+    });
+
+    footer.appendChild(adBtn);
+
+    // Append img, body, and footer to card
+    card.appendChild(img);
+    card.appendChild(body);
+    card.appendChild(footer);
+
+    // Append card to the advertisements container
+    adContainer.appendChild(card);
+};
+
+// Function to display ads based on filter
+const displayAds = (filter) => {
+    const adContainer = document.getElementById("advertisements");
+    adContainer.innerHTML = ""; // Clear previous ads
+
+    const filteredAds = filter
+        ? advertisementsData.filter(ad => ad.title.toLowerCase().includes(filter))
+        : advertisementsData;
+
+    filteredAds.forEach(ad => renderAdCard(ad, adContainer));
+};
+
+// Run when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+    displayAds(""); // Show all ads initially
+});
+
+// Handle input for filtering
+document.getElementById("inputFilter").addEventListener("input", function () {
+    const filter = this.value.toLowerCase().trim();
+    displayAds(filter); // Call the corrected function
+});

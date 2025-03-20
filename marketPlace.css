@@ -1,0 +1,17 @@
+header {
+    background-color: #d10000;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+}
+
+
+footer {
+    margin-top: auto;
+    padding: 10px;
+    background-color: #000000;
+    border-radius: 5px;
+    text-align: center;
+    color: #fff;
+    box-shadow:#333;
+}
